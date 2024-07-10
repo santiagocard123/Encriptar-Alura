@@ -3,30 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encriptador/Desencriptador</title>
+    <title>Encriptador de mensajes</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="container mx-auto p-4">
-        <h1 class="text-3xl font-bold text-center mb-4">Encriptador/Desencriptador</h1>
-
-        <div class="flex flex-col md:flex-row items-center gap-4">
-            <div class="flex flex-col w-full md:w-1/2">
-                <label for="inputText" class="block text-gray-700 text-sm font-bold mb-2">Texto:</label>
-                <textarea id="inputText" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ingrese su texto"></textarea>
-
-                <button id="encryptButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4">Encriptar</button>
-            </div>
-
-            <div class="flex flex-col w-full md:w-1/2">
-                <label for="outputText" class="block text-gray-700 text-sm font-bold mb-2">Resultado:</label>
-                <textarea id="outputText" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" readonly></textarea>
-
-                <button id="decryptButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4">Desencriptar</button>
-            </div>
+<body class="bg-gray-100">
+    <header class="bg-white shadow-md py-4">
+        <div class="container mx-auto flex justify-center">
+            <img src="img/aluraoracle.png" alt="logo de alura" class="h-20">
         </div>
-    </div>
-
+    </header>
+    <main class="container mx-auto mt-40 flex flex-col md:flex-row justify-center items-start">
+        <form class="shadow bg-gray-100  rounded px-8 pt-6 pb-8 mt-30 w-full md:w-1/2 mr-0 md:mr-4">
+            <div class="mb-50">
+                <textarea class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-gray-100" id="miTextarea" rows="23" placeholder="Ingrese el texto aquí"></textarea>
+            </div>
+            <div class="flex items-center justify-between">
+                <div class="text-sm text-gray-500 flex items-center">
+                    <img src="img/Vectorspam.png" alt="alert" class="h-4 mr-2">
+                    <span>solo letras minúsculas y sin acento</span>
+                </div>
+            </div>
+            <div class="flex justify-between mt-4">
+                <button id="encriptarBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Encriptar</button>
+                <button id="desencriptarBtn" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Desencriptar</button>
+            </div>
+        </form>
+        <div class="mb-50 shadow-md rounded px-15 pt-10 pb-10 w-full md:w-1/2 mt-20 flex items-center justify-center">
+            <div class="flex flex-col items-center justify-center h-full">
+                <img src="img/Muñecoimagen.png" alt="Imagen de monito" class="result__img h-100 mb-50">
+                <div id="carga" class="loader hidden"></div>
+                <h3 id="result__title" class="text-gray-700 text-sm font-bold mb-2">Ningún mensaje fue encontrado</h3>
+                <p id="result__text" class="text-gray-700 text-sm">Ingresa el texto que deseas encriptar o desencriptar.</p>
+                <button id="copiarBtn" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4 hidden">Copiar</button>
+            </div>
+        </div>        
+    </main>
     <script src="script.js"></script>
 </body>
 </html>

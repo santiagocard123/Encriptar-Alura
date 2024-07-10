@@ -1,62 +1,88 @@
-const inputText = document.getElementById('inputText');
-const outputText = document.getElementById('outputText');
-const encryptButton = document.getElementById('encryptButton');
-const decryptButton = document.getElementById('decryptButton');
+const miTextarea = document.getElementById('miTextarea');
+const muneco = document.querySelector('.result__img');
+const carga = document.getElementById('carga');
+const result__text = document.getElementById('result__text');
+const result__title = document.getElementById('result__title');
+const encriptarBtn = document.getElementById('encriptarBtn');
+const desencriptarBtn = document.getElementById('desencriptarBtn');
+const copiarBtn = document.getElementById('copiarBtn');
 
-
-function encryptText(text) {
-  let encryptedText = '';
-  for (let i = 0; i < text.length; i++) {
-    const charCode = text.charCodeAt(i);
-    if (charCode >= 65 && charCode <= 90) { 
-      encryptedText += String.fromCharCode(((charCode - 65 + 3) % 26) + 65);
-    } else if (charCode >= 97 && charCode <= 122) { 
-      encryptedText += String.fromCharCode(((charCode - 97 + 3) % 26) + 97);
-    } else {
-      encryptedText += text[i];
+function encriptarMensaje(mensaje) {
+    let mensajeEncriptado = "";
+    for (let i = 0; i < mensaje.length; i++) {
+        let letra = mensaje[i];
+        switch (letra) {
+            case 'a':
+                letra = "ai";
+                break;
+            case 'e':
+                letra = "enter";
+                break;
+            case 'i':
+                letra = "imes";
+                break;
+            case 'o':
+                letra = "ober";
+                break;
+            case 'u':
+                letra = "ufat";
+                break;
+        }
+        mensajeEncriptado += letra;
     }
-  }
-  return encryptedText;
+    return mensajeEncriptado;
 }
 
-
-function decryptText(text) {
-  let decryptedText = '';
-  for (let i = 0; i < text.length; i++) {
-    const charCode = text.charCodeAt(i);
-    if (charCode >= 65 && charCode <= 90) { 
-      decryptedText += String.fromCharCode(((charCode - 65 - 3 + 26) % 26) + 65);
-    } else if (charCode >= 97 && charCode <= 122) {
-      decryptedText += String.fromCharCode(((charCode - 97 - 3 + 26) % 26) + 97);
-    } else {
-      decryptedText += text[i];
-    }
-  }
-  return decryptedText;
+function desencriptarMensaje(mensaje) {
+    let mensajeDesencriptado = mensaje.replace(/ai|enter|imes|ober|ufat/g, function(matched) {
+        switch (matched) {
+            case 'ai':
+                return 'a';
+            case 'enter':
+                return 'e';
+            case 'imes':
+                return 'i';
+            case 'ober':
+                return 'o';
+            case 'ufat':
+                return 'u';
+        }
+    });
+    return mensajeDesencriptado;
 }
 
-
-function textToBinary(text) {
-  let binaryText = '';
-  for (let i = 0; i < text.length; i++) {
-    const charCode = text.charCodeAt(i);
-    binaryText += charCode.toString(2).padStart(8, '0') + ' ';
-  }
-  return binaryText.trim();
-}
-
-
-encryptButton.addEventListener('click', () => {
-  const inputValue = inputText.value;
-  const encryptedValue = encryptText(inputValue);
-  const binaryEncryptedValue = textToBinary(encryptedValue);
-  outputText.value = binaryEncryptedValue;
+miTextarea.addEventListener("input", (e) => {
+    muneco.style.display = "none";
+    carga.classList.remove("hidden");
+    result__title.textContent = "Capturando mensaje";
+    result__text.textContent = "";
 });
 
+encriptarBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    let mensaje = miTextarea.value.toLowerCase();
+    let mensajeEncriptado = encriptarMensaje(mensaje);
+    result__text.textContent = mensajeEncriptado;
+    copiarBtn.classList.remove("hidden");
+    result__title.textContent = "El resultado es:";
+    carga.classList.add("hidden");
+});
 
-decryptButton.addEventListener('click', () => {
-  const inputValue = inputText.value;
-  const decryptedValue = decryptText(inputValue);
-  const binaryDecryptedValue = textToBinary(decryptedValue);
-  outputText.value = binaryDecryptedValue;
+desencriptarBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    let mensaje = miTextarea.value.toLowerCase();
+    let mensajeDesencriptado = desencriptarMensaje(mensaje);
+    result__text.textContent = mensajeDesencriptado;
+    copiarBtn.classList.remove("hidden");
+    result__title.textContent = "El resultado es:";
+    carga.classList.add("hidden");
+});
+
+copiarBtn.addEventListener("click", () => {
+    let textoCopiado = result__text.textContent;
+    navigator.clipboard.writeText(textoCopiado).then(() => {
+        muneco.style.display = "block";
+        carga.classList.add("hidden");
+        result__title.textContent = "El texto se copió";
+    });
 });
